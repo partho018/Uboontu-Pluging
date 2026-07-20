@@ -48,7 +48,7 @@ class Uboontu_Testimonials_Widget extends \Elementor\Widget_Base {
 				'label_on' => esc_html__( 'Show', 'uboontu-blog-shortcodes' ),
 				'label_off' => esc_html__( 'Hide', 'uboontu-blog-shortcodes' ),
 				'return_value' => 'yes',
-				'default' => 'yes',
+				'default' => '', // Hides by default
 			]
 		);
 
@@ -57,7 +57,7 @@ class Uboontu_Testimonials_Widget extends \Elementor\Widget_Base {
 			[
 				'label' => esc_html__( 'Badge Text', 'uboontu-blog-shortcodes' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
-				'default' => esc_html__( 'Voices of Impact', 'uboontu-blog-shortcodes' ),
+				'default' => esc_html__( 'Voices Of Impact', 'uboontu-blog-shortcodes' ),
 				'label_block' => true,
 				'condition' => [
 					'show_header' => 'yes',
@@ -91,6 +91,19 @@ class Uboontu_Testimonials_Widget extends \Elementor\Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'layout',
+			[
+				'label' => esc_html__( 'Layout', 'uboontu-blog-shortcodes' ),
+				'type' => \Elementor\Controls_Manager::SELECT,
+				'default' => 'marquee',
+				'options' => [
+					'marquee' => esc_html__( 'Autoplay Marquee', 'uboontu-blog-shortcodes' ),
+					'grid' => esc_html__( 'Static Grid', 'uboontu-blog-shortcodes' ),
+				],
+			]
+		);
+
 		$this->add_responsive_control(
 			'columns',
 			[
@@ -107,6 +120,47 @@ class Uboontu_Testimonials_Widget extends \Elementor\Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .uboontu-testimonials-grid' => 'grid-template-columns: repeat({{VALUE}}, 1fr);',
+				],
+				'condition' => [
+					'layout' => 'grid',
+				],
+			]
+		);
+
+		$this->add_control(
+			'marquee_rows',
+			[
+				'label' => esc_html__( 'Marquee Rows', 'uboontu-blog-shortcodes' ),
+				'type' => \Elementor\Controls_Manager::SELECT,
+				'default' => '2',
+				'options' => [
+					'1' => esc_html__( '1 Row', 'uboontu-blog-shortcodes' ),
+					'2' => esc_html__( '2 Rows', 'uboontu-blog-shortcodes' ),
+					'3' => esc_html__( '3 Rows', 'uboontu-blog-shortcodes' ),
+				],
+				'condition' => [
+					'layout' => 'marquee',
+				],
+			]
+		);
+
+		$this->add_control(
+			'marquee_speed',
+			[
+				'label' => esc_html__( 'Marquee Speed (Seconds)', 'uboontu-blog-shortcodes' ),
+				'type' => \Elementor\Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 10,
+						'max' => 150,
+						'step' => 5,
+					],
+				],
+				'default' => [
+					'size' => 50,
+				],
+				'condition' => [
+					'layout' => 'marquee',
 				],
 			]
 		);
@@ -273,13 +327,17 @@ class Uboontu_Testimonials_Widget extends \Elementor\Widget_Base {
 		$settings = $this->get_settings_for_display();
 		$testimonials = ! empty( $settings['testimonials_list'] ) ? $settings['testimonials_list'] : [];
 
-		if ( 'yes' === $settings['randomize'] && ! empty( $testimonials ) ) {
+		if ( empty( $testimonials ) ) {
+			return;
+		}
+
+		if ( 'yes' === $settings['randomize'] ) {
 			shuffle( $testimonials );
 		}
 		?>
 		<div class="blogs-page">
-		  <section class="uboontu-testimonials-section">
-			<div class="uboontu-testimonials-container">
+		  <section class="uboontu-testimonials-section" style="padding: 0; background: transparent;">
+			<div class="uboontu-testimonials-container" style="padding: 0; max-width: 100%;">
 			  
 			  <!-- Optional Section Header -->
 			  <?php if ( 'yes' === $settings['show_header'] ) : ?>
@@ -302,10 +360,10 @@ class Uboontu_Testimonials_Widget extends \Elementor\Widget_Base {
 				  </div>
 			  <?php endif; ?>
 
-			  <!-- Testimonials Grid -->
-			  <div class="uboontu-testimonials-grid">
-				<?php 
-				if ( ! empty( $testimonials ) ) :
+			  <?php if ( 'grid' === $settings['layout'] ) : ?>
+				  <!-- Testimonials Grid Layout -->
+				  <div class="uboontu-testimonials-grid" style="padding: 0 24px;">
+					<?php 
 					foreach ( $testimonials as $item ) :
 						$photo_url = '';
 						if ( is_array( $item['user_image'] ) && ! empty( $item['user_image']['url'] ) ) {
@@ -321,32 +379,96 @@ class Uboontu_Testimonials_Widget extends \Elementor\Widget_Base {
 							}
 							$initials = substr( $initials, 0, 2 );
 						}
-				?>
-					<div class="uboontu-testimonial-card">
-					  <div class="uboontu-testimonial-text">
-						<?php echo esc_html( $item['testimonial_text'] ); ?>
-					  </div>
-					  
-					  <div class="uboontu-testimonial-profile">
-						<?php if ( ! empty( $photo_url ) ) : ?>
-							<img src="<?php echo esc_url( $photo_url ); ?>" alt="<?php echo esc_attr( $item['user_name'] ); ?>" class="uboontu-testimonial-avatar" />
-						<?php else : ?>
-							<div class="uboontu-testimonial-avatar">
-								<?php echo esc_html( $initials ); ?>
+					?>
+						<div class="uboontu-testimonial-card">
+						  <div class="uboontu-testimonial-text">
+							<?php echo esc_html( $item['testimonial_text'] ); ?>
+						  </div>
+						  
+						  <div class="uboontu-testimonial-profile">
+							<?php if ( ! empty( $photo_url ) ) : ?>
+								<img src="<?php echo esc_url( $photo_url ); ?>" alt="<?php echo esc_attr( $item['user_name'] ); ?>" class="uboontu-testimonial-avatar" />
+							<?php else : ?>
+								<div class="uboontu-testimonial-avatar">
+									<?php echo esc_html( $initials ); ?>
+								</div>
+							<?php endif; ?>
+							
+							<div class="uboontu-testimonial-info">
+							  <span class="uboontu-testimonial-name"><?php echo esc_html( $item['user_name'] ); ?></span>
+							  <span class="uboontu-testimonial-title"><?php echo esc_html( $item['user_title'] ); ?></span>
 							</div>
-						<?php endif; ?>
-						
-						<div class="uboontu-testimonial-info">
-						  <span class="uboontu-testimonial-name"><?php echo esc_html( $item['user_name'] ); ?></span>
-						  <span class="uboontu-testimonial-title"><?php echo esc_html( $item['user_title'] ); ?></span>
+						  </div>
 						</div>
-					  </div>
+					<?php 
+					endforeach; 
+					?>
+				  </div>
+
+			  <?php else : ?>
+				  <!-- Testimonials Autoplay Marquee Layout -->
+				  <?php 
+				  $rows_count = intval( $settings['marquee_rows'] );
+				  $chunks = array_chunk( $testimonials, max( 1, ceil( count( $testimonials ) / $rows_count ) ) );
+				  $speed = ! empty( $settings['marquee_speed']['size'] ) ? $settings['marquee_speed']['size'] : 50;
+				  ?>
+				  <div class="uboontu-testimonials-marquee-wrapper" style="--marquee-speed: <?php echo esc_attr( $speed ); ?>s;">
+					<div class="marquee-fade-left"></div>
+					<div class="marquee-fade-right"></div>
+
+					<div class="uboontu-testimonials-marquee-grid">
+					  <?php foreach ( $chunks as $i => $chunk ) : 
+						  $direction_class = ($i % 2 === 0) ? 'row-left' : 'row-right';
+					  ?>
+						<div class="uboontu-testimonials-marquee-row <?php echo esc_attr( $direction_class ); ?>">
+						  <div class="uboontu-testimonials-marquee-track">
+							<?php 
+							// Output twice to create a seamless looping marquee
+							for ( $cycle = 0; $cycle < 2; $cycle++ ) :
+								foreach ( $chunk as $item ) :
+									$photo_url = '';
+									if ( is_array( $item['user_image'] ) && ! empty( $item['user_image']['url'] ) ) {
+										$photo_url = $item['user_image']['url'];
+									}
+									$initials = '';
+									if ( ! empty( $item['user_name'] ) ) {
+										$words = explode( ' ', $item['user_name'] );
+										foreach ( $words as $w ) {
+											$initials .= strtoupper( substr( $w, 0, 1 ) );
+										}
+										$initials = substr( $initials, 0, 2 );
+									}
+							?>
+								<div class="uboontu-testimonial-card marquee-card">
+								  <div class="uboontu-testimonial-text">
+									<?php echo esc_html( $item['testimonial_text'] ); ?>
+								  </div>
+								  
+								  <div class="uboontu-testimonial-profile">
+									<?php if ( ! empty( $photo_url ) ) : ?>
+										<img src="<?php echo esc_url( $photo_url ); ?>" alt="<?php echo esc_attr( $item['user_name'] ); ?>" class="uboontu-testimonial-avatar" />
+									<?php else : ?>
+										<div class="uboontu-testimonial-avatar">
+											<?php echo esc_html( $initials ); ?>
+										</div>
+									<?php endif; ?>
+									
+									<div class="uboontu-testimonial-info">
+									  <span class="uboontu-testimonial-name"><?php echo esc_html( $item['user_name'] ); ?></span>
+									  <span class="uboontu-testimonial-title"><?php echo esc_html( $item['user_title'] ); ?></span>
+									</div>
+								  </div>
+								</div>
+							<?php 
+								endforeach;
+							endfor; 
+							?>
+						  </div>
+						</div>
+					  <?php endforeach; ?>
 					</div>
-				<?php 
-					endforeach;
-				endif; 
-				?>
-			  </div>
+				  </div>
+			  <?php endif; ?>
 
 			</div>
 		  </section>

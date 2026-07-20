@@ -3221,3 +3221,47 @@
         grid-template-columns: 1fr !important;
     }
 }
+
+/* ─── TESTIMONIALS MARQUEE ─── */
+.blogs-page .uboontu-testimonials-marquee-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 20px 0;
+}
+.blogs-page .uboontu-testimonials-marquee-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+}
+.blogs-page .uboontu-testimonials-marquee-row {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+}
+.blogs-page .uboontu-testimonials-marquee-track {
+  display: flex;
+  gap: 2rem;
+  width: max-content;
+  will-change: transform;
+}
+.blogs-page .row-left .uboontu-testimonials-marquee-track {
+  animation: scroll-left var(--marquee-speed, 50s) linear infinite;
+}
+.blogs-page .row-right .uboontu-testimonials-marquee-track {
+  animation: scroll-right var(--marquee-speed, 50s) linear infinite;
+}
+.blogs-page .uboontu-testimonials-marquee-row:hover .uboontu-testimonials-marquee-track {
+  animation-play-state: paused;
+}
+.blogs-page .uboontu-testimonial-card.marquee-card {
+  width: 420px;
+  flex-shrink: 0;
+}
+@media (max-width: 768px) {
+  .blogs-page .uboontu-testimonial-card.marquee-card {
+    width: 320px;
+    padding: 2rem 1.5rem;
+  }
+}
