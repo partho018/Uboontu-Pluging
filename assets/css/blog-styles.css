@@ -3150,19 +3150,17 @@
 .blogs-page .uboontu-testimonial-card {
     background: #ffffff;
     border: 1px solid rgba(18, 33, 26, 0.08);
-    border-radius: 24px;
+    border-radius: 20px;
     padding: 2.5rem 2rem;
-    box-shadow: var(--card-shadow);
+    box-shadow: none;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     gap: 2rem;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition: border-color 0.4s ease;
 }
 .blogs-page .uboontu-testimonial-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--card-hover-shadow);
-    border-color: var(--primary) !important;
+    border-color: #3bb852 !important;
 }
 .blogs-page .uboontu-testimonial-text {
     font-size: 1.05rem;
