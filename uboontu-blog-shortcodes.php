@@ -932,5 +932,8 @@ function uboontu_register_elementor_sdg_widget( $widgets_manager ) {
 
     require_once plugin_dir_path( __FILE__ ) . 'includes/class-uboontu-title-widget.php';
     $widgets_manager->register( new \Uboontu_Title_Widget() );
+
+    require_once plugin_dir_path( __FILE__ ) . 'includes/class-uboontu-testimonials-widget.php';
+    $widgets_manager->register( new \Uboontu_Testimonials_Widget() );
 }
 add_action( 'elementor/widgets/register', 'uboontu_register_elementor_sdg_widget' );

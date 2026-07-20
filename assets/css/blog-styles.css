@@ -3130,3 +3130,94 @@
 	display: inline-block;
 	line-height: inherit;
 }
+
+/* ─── TESTIMONIALS GRID ─── */
+.blogs-page .uboontu-testimonials-section {
+    padding: 60px 0;
+    background: transparent;
+    width: 100%;
+}
+.blogs-page .uboontu-testimonials-container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 24px;
+}
+.blogs-page .uboontu-testimonials-grid {
+    display: grid;
+    gap: 2rem;
+    width: 100%;
+}
+.blogs-page .uboontu-testimonial-card {
+    background: #ffffff;
+    border: 1px solid rgba(18, 33, 26, 0.08);
+    border-radius: 24px;
+    padding: 2.5rem 2rem;
+    box-shadow: var(--card-shadow);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2rem;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.blogs-page .uboontu-testimonial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--card-hover-shadow);
+    border-color: var(--primary) !important;
+}
+.blogs-page .uboontu-testimonial-text {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    font-weight: 400;
+    font-family: var(--font-body);
+}
+.blogs-page .uboontu-testimonial-profile {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.blogs-page .uboontu-testimonial-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--bg-tertiary);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: var(--primary);
+    border: 2px solid rgba(59, 184, 82, 0.15);
+    font-size: 0.95rem;
+}
+.blogs-page .uboontu-testimonial-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+.blogs-page .uboontu-testimonial-name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    font-family: var(--font-body);
+}
+.blogs-page .uboontu-testimonial-title {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-family: var(--font-body);
+}
+
+/* Tablet default (fallback if Elementor inline styles not generated) */
+@media (max-width: 1024px) {
+    .blogs-page .uboontu-testimonials-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+/* Mobile default (fallback if Elementor inline styles not generated) */
+@media (max-width: 768px) {
+    .blogs-page .uboontu-testimonials-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
