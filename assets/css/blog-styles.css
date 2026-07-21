@@ -3160,7 +3160,7 @@
     transition: border-color 0.4s ease;
 }
 .blogs-page .uboontu-testimonial-card:hover {
-    border-color: #3bb852 !important;
+    border-color: #3bb852;
 }
 .blogs-page .uboontu-testimonial-text {
     font-size: 1.05rem;
@@ -3185,8 +3185,8 @@
     align-items: center;
     justify-content: center;
     font-weight: 600;
-    color: var(--primary);
-    border: 2px solid rgba(59, 184, 82, 0.15);
+    color: var(--text-primary);
+    border: 2px solid rgba(18, 33, 26, 0.15);
     font-size: 0.95rem;
 }
 .blogs-page .uboontu-testimonial-info {
@@ -3251,7 +3251,7 @@
   animation: scroll-right var(--marquee-speed, 50s) linear infinite;
 }
 .blogs-page .uboontu-testimonials-marquee-row:hover .uboontu-testimonials-marquee-track {
-  animation-play-state: paused;
+  animation-play-state: running;
 }
 .blogs-page .uboontu-testimonial-card.marquee-card {
   width: 420px;

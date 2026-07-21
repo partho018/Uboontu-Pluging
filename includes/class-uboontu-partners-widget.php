@@ -128,6 +128,18 @@ class Uboontu_Partners_Widget extends \Elementor\Widget_Base {
 		);
 
 		$this->add_control(
+			'enable_hover',
+			[
+				'label' => esc_html__( 'Enable Hover Effect', 'uboontu-blog-shortcodes' ),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'uboontu-blog-shortcodes' ),
+				'label_off' => esc_html__( 'No', 'uboontu-blog-shortcodes' ),
+				'return_value' => 'yes',
+				'default' => 'yes',
+			]
+		);
+
+		$this->add_control(
 			'logo_opacity',
 			[
 				'label' => esc_html__( 'Logo Opacity (0-1)', 'uboontu-blog-shortcodes' ),
@@ -144,6 +156,9 @@ class Uboontu_Partners_Widget extends \Elementor\Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .brand-logo-img' => 'opacity: {{SIZE}} !important;',
+				],
+				'condition' => [
+					'enable_hover' => 'yes',
 				],
 			]
 		);
@@ -165,6 +180,105 @@ class Uboontu_Partners_Widget extends \Elementor\Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .brand-item:hover .brand-logo-img' => 'opacity: {{SIZE}} !important;',
+				],
+				'condition' => [
+					'enable_hover' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
+			'logo_opacity_static',
+			[
+				'label' => esc_html__( 'Logo Opacity (0-1)', 'uboontu-blog-shortcodes' ),
+				'type' => \Elementor\Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 0.1,
+						'max' => 1,
+						'step' => 0.05,
+					],
+				],
+				'default' => [
+					'size' => 1.0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .brand-logo-img' => 'opacity: {{SIZE}} !important;',
+				],
+				'condition' => [
+					'enable_hover!' => 'yes',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'logo_height',
+			[
+				'label' => esc_html__( 'Logo Height', 'uboontu-blog-shortcodes' ),
+				'type' => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'vh' ],
+				'range' => [
+					'px' => [
+						'min' => 20,
+						'max' => 200,
+						'step' => 1,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 64,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .brand-logo-img' => 'height: {{SIZE}}{{UNIT}} !important; max-height: {{SIZE}}{{UNIT}} !important;',
+					'{{WRAPPER}} .brand-item' => 'height: {{SIZE}}{{UNIT}} !important;',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'logo_spacing_h',
+			[
+				'label' => esc_html__( 'Horizontal Spacing', 'uboontu-blog-shortcodes' ),
+				'type' => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'vw' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 150,
+						'step' => 1,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 40,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .brands-marquee-track' => 'gap: {{SIZE}}{{UNIT}} !important;',
+					'{{WRAPPER}} .brands-static-grid' => 'column-gap: {{SIZE}}{{UNIT}} !important;',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'logo_spacing_v',
+			[
+				'label' => esc_html__( 'Vertical Row Spacing', 'uboontu-blog-shortcodes' ),
+				'type' => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'vh' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 150,
+						'step' => 1,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 16,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .brands-grid' => 'gap: {{SIZE}}{{UNIT}} !important;',
+					'{{WRAPPER}} .brands-static-grid' => 'row-gap: {{SIZE}}{{UNIT}} !important;',
 				],
 			]
 		);

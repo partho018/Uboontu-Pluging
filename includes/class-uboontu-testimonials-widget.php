@@ -29,6 +29,10 @@ class Uboontu_Testimonials_Widget extends \Elementor\Widget_Base {
 		return [ 'uboontu-blog-styles' ];
 	}
 
+	public function get_script_depends() {
+		return [ 'uboontu-blog-scripts' ];
+	}
+
 	protected function register_controls() {
 
 		// Section Header Controls
@@ -203,6 +207,29 @@ class Uboontu_Testimonials_Widget extends \Elementor\Widget_Base {
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .uboontu-testimonial-card' => 'background: {{VALUE}} !important;',
+				],
+			]
+		);
+
+		$this->add_control(
+			'card_border_color',
+			[
+				'label' => esc_html__( 'Card Border Color', 'uboontu-blog-shortcodes' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .uboontu-testimonial-card' => 'border-color: {{VALUE}} !important;',
+				],
+			]
+		);
+
+		$this->add_control(
+			'card_hover_border_color',
+			[
+				'label' => esc_html__( 'Card Hover Border Color', 'uboontu-blog-shortcodes' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .uboontu-testimonial-card:hover' => 'border-color: {{VALUE}} !important;',
+					'{{WRAPPER}} .uboontu-testimonial-card:hover .uboontu-testimonial-name' => 'color: {{VALUE}} !important;',
 				],
 			]
 		);
